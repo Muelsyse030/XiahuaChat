@@ -7,6 +7,7 @@
 *****************************************************************************/
 
 #include "../../../regsiterdialog.h"
+#include <QtNetwork/QSslError>
 #include <QtCore/qmetatype.h>
 
 #include <QtCore/qtmochelpers.h>
@@ -40,12 +41,22 @@ template <> constexpr inline auto RegsiterDialog::qt_create_metaobjectdata<qt_me
     QtMocHelpers::StringRefStorage qt_stringData {
         "RegsiterDialog",
         "on_varify_btn_clicked",
-        ""
+        "",
+        "slot_reg_mod_finish",
+        "ReqId",
+        "id",
+        "res",
+        "ErrorCodes",
+        "err"
     };
 
     QtMocHelpers::UintData qt_methods {
         // Slot 'on_varify_btn_clicked'
         QtMocHelpers::SlotData<void()>(1, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'slot_reg_mod_finish'
+        QtMocHelpers::SlotData<void(ReqId, QString, ErrorCodes)>(3, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { 0x80000000 | 4, 5 }, { QMetaType::QString, 6 }, { 0x80000000 | 7, 8 },
+        }}),
     };
     QtMocHelpers::UintData qt_properties {
     };
@@ -70,10 +81,10 @@ void RegsiterDialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
         case 0: _t->on_varify_btn_clicked(); break;
+        case 1: _t->slot_reg_mod_finish((*reinterpret_cast< std::add_pointer_t<ReqId>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<ErrorCodes>>(_a[3]))); break;
         default: ;
         }
     }
-    (void)_a;
 }
 
 const QMetaObject *RegsiterDialog::metaObject() const
@@ -95,14 +106,14 @@ int RegsiterDialog::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 1)
+        if (_id < 2)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 1;
+        _id -= 2;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 1)
+        if (_id < 2)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 1;
+        _id -= 2;
     }
     return _id;
 }

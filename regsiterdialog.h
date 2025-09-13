@@ -3,7 +3,7 @@
 
 #include <QDialog>
 #include <QRegularExpression>
-
+#include "global.h"
 namespace Ui {
 class RegsiterDialog;
 }
@@ -18,10 +18,14 @@ public:
 
 private slots:
     void on_varify_btn_clicked();
+    void slot_reg_mod_finish(ReqId id , QString res , ErrorCodes err);
 
 private:
+    void initHttpHandlers();
     void showTip(const QString& str,bool b_ok);
     Ui::RegsiterDialog *ui;
+    QMap<ReqId, std::function<void(const QJsonObject&)>> _handlers;
+
 };
 
 #endif // REGSITERDIALOG_H
