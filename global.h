@@ -8,6 +8,10 @@
 #include <mutex>
 #include <QByteArray>
 #include <QtNetwork/QNetworkReply>
+#include <QJsonObject>
+#include <QDir>
+#include <qsettings.h>
+
 /*
 * @brief repolish 刷新qss
 */
@@ -24,4 +28,6 @@ enum ErrorCodes{
     ERR_JSON = 1,//json解析失败
     ERR_NETWORK = 2, //网络错误
 };
+extern QString gate_url_prefix;
+
 #endif // GLOBAL_H

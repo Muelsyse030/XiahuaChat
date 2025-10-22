@@ -1,12 +1,14 @@
 #include "httpmgr.h"
 
-HttpMgr::HttpMgr() {}
-HttpMgr::~HttpMgr()
-{
+HttpMgr::HttpMgr() {
     connect(this , &HttpMgr::sig_http_finish , this , &HttpMgr::slot_http_finish);
+}
+HttpMgr::~HttpMgr(){
+
 }
 void HttpMgr::PostHttpReq(QUrl url, QJsonObject json, ReqId req_id, Modules mod)
 {
+    qDebug() << "HttpMgr::PostHttpReq url:" << url << "mod:" << mod << "reqId:" << req_id;
     QByteArray data = QJsonDocument(json).toJson();
     QNetworkRequest request(url);
     request.setHeader(QNetworkRequest::ContentTypeHeader,"application/json");
@@ -34,7 +36,7 @@ void HttpMgr::slot_http_finish(ReqId id, QString res, ErrorCodes err, Modules mo
 {
     if(mod == Modules::REGISTERMOD){
         //发送信号通知指定模块http的响应结束了
-        emit sig_http_finish(id, res , err , mod);
+        emit  sig_reg_mod_finish(id, res , err);
 
     }
 }

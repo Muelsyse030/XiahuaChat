@@ -14,6 +14,7 @@ RegsiterDialog::RegsiterDialog(QWidget *parent)
     repolish(ui->err_tip);
     connect(HttpMgr::GetInstance().get() , &HttpMgr::sig_reg_mod_finish,
             this , &RegsiterDialog::slot_reg_mod_finish);
+    qDebug() << "RegsiterDialog: connected to HttpMgr instance:" << HttpMgr::GetInstance().get();
     initHttpHandlers();
 }
 
@@ -28,7 +29,10 @@ void RegsiterDialog::on_varify_btn_clicked()
     QRegularExpression regex(R"([A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,})");
     bool match = regex.match(email).hasMatch();
     if(match){
-        //发送http验证码
+        QJsonObject json_obj;
+        json_obj["email"] = email;
+        HttpMgr::GetInstance()->PostHttpReq(QUrl(gate_url_prefix+"/get_varifycode"),
+            json_obj , ReqId::ID_GET_VARIFY_CODE , Modules::REGISTERMOD);
     }else{
         showTip(tr("邮箱地址不正确"),false);
     }
@@ -36,6 +40,7 @@ void RegsiterDialog::on_varify_btn_clicked()
 
 void RegsiterDialog::slot_reg_mod_finish(ReqId id, QString res, ErrorCodes err)
 {
+    qDebug() << "slot_reg_mod_finish called:" << id << res << err;
     if(err != ErrorCodes::SUCCESS){
         showTip(tr("网络请求错误"),false);
         return;
@@ -53,8 +58,8 @@ void RegsiterDialog::slot_reg_mod_finish(ReqId id, QString res, ErrorCodes err)
         return;
     }
 
-    jsonDoc.object();
-    _handlers[id](jsonDoc.object());
+    QJsonObject obj = jsonDoc.object();
+    _handlers[id](obj);
     return;
 
 }
