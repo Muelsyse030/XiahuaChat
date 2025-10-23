@@ -8,7 +8,6 @@ HttpMgr::~HttpMgr(){
 }
 void HttpMgr::PostHttpReq(QUrl url, QJsonObject json, ReqId req_id, Modules mod)
 {
-    qDebug() << "HttpMgr::PostHttpReq url:" << url << "mod:" << mod << "reqId:" << req_id;
     QByteArray data = QJsonDocument(json).toJson();
     QNetworkRequest request(url);
     request.setHeader(QNetworkRequest::ContentTypeHeader,"application/json");

@@ -12,6 +12,7 @@
 #include <QDir>
 #include <qsettings.h>
 
+
 /*
 * @brief repolish 刷新qss
 */
